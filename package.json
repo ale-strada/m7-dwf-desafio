@@ -22,7 +22,7 @@
     "build:be": "tsc --build",
     "dev:fe": "parcel serve ./fe-src/index.html",
     "build:fe": "parcel build ./fe-src/index.html",
-    "build": "yarn build:be && yarn build:fe",
+    "build": "yarn build:front && yarn build:be",
     "start": "node ./be-dist/index.js",
     "dev": "yarn build:fe && yarn dev:be"
   },
