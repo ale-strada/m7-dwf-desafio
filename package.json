@@ -18,8 +18,9 @@
     }
   },
   "scripts": {
+    "tsc": "tsc",
     "dev:be": "nodemon --watch ./be-src/index.ts --exec ts-node ./be-src/dev.ts",
-    "build:be": "tsc --build",
+    "build:be": "npm run tsc",
     "dev:fe": "parcel serve ./fe-src/index.html",
     "build:fe": "parcel build ./fe-src/index.html",
     "build": "yarn build:fe && yarn build:be",
