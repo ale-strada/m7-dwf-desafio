@@ -1,5 +1,4 @@
 const API_BASE_URL = "";
-import { Router } from "express";
 
 const state = {
   data: {
@@ -15,6 +14,12 @@ const state = {
       lng: "",
       ubication: "",
       pictureURL: "",
+      email: "",
+    },
+    reporte: {
+      nombre: "",
+      telefono: "",
+      descripcion: "",
     },
     currentPetEditId: "",
     petsNear: [],
@@ -63,6 +68,23 @@ const state = {
         });
         state.setState(cs);
       });
+  },
+  async sendEmail() {
+    const cs = this.getState();
+    const res = await fetch(API_BASE_URL + "/send", {
+      method: "post",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        to: cs.lostPetData.email, //no carga email
+        from: "buscador.de.mascotas.app@gmail.com",
+        subject: cs.reporte.nombre,
+        text: cs.reporte.descripcion + " mi telefono es:" + cs.reporte.telefono,
+      }),
+    });
+    const data = await res.json();
+    console.log(data);
   },
   async createPet() {
     const cs = this.getState();
@@ -148,6 +170,22 @@ const state = {
       }
     } else {
       console.error("usuario no registrado");
+    }
+  },
+  async deletePet() {
+    const cs = this.getState();
+    const res = await fetch(API_BASE_URL + "pets/" + cs.currentPetEditId, {
+      method: "delete",
+      headers: {
+        "content-type": "application/json",
+        Authorization: cs.token,
+      },
+    });
+    const data = await res.json();
+    if (data) {
+      console.log(data);
+    } else {
+      console.log("vacio");
     }
   },
   setState(newState) {

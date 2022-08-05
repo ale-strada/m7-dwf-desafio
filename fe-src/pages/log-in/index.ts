@@ -111,6 +111,10 @@ class LoginPage extends HTMLElement {
     .azul{
         color: #108896;
     }
+    .azul:hover {
+      text-decoration: underline;
+      cursor:pointer;
+    }
     .error-message{
         font-family: 'Roboto';
         font-style: normal;

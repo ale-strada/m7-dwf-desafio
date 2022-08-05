@@ -20,9 +20,13 @@ import * as jwt from "jsonwebtoken";
 import * as path from "path";
 import * as express from "express";
 import { User } from "./models";
+import * as cors from "cors";
+import { sgMail } from "./lib/sendgrid";
 
 const port = process.env.PORT || 3005;
 const app = express();
+
+app.use(cors());
 
 app.use(
   express.json({
@@ -34,6 +38,18 @@ app.get("/test", (req, res) => {
   res.json({
     message: "hola soy el servidor",
   });
+});
+
+app.post("/send", (req, res) => {
+  const msg = req.body;
+  sgMail
+    .send(msg)
+    .then(() => {
+      res.json({ message: "Email sent" });
+    })
+    .catch((error) => {
+      res.json(error);
+    });
 });
 //--------------- USERS ENDPOINTS--------------------------------------
 app.get("/user", async (req, res) => {

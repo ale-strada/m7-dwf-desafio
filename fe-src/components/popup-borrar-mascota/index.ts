@@ -1,6 +1,6 @@
 import { Router } from "@vaadin/router";
 import { state } from "../../state";
-import { iconoX } from "../../img/iconos";
+import { iconoXblanco } from "../../img/iconos";
 
 export function initDeletePet() {
   class DeletePetComp extends HTMLElement {
@@ -13,9 +13,6 @@ export function initDeletePet() {
     }
 
     render() {
-      //   const textoOriginal: any = this.textContent;
-      //   const pet = JSON.parse(textoOriginal);
-
       var style = document.createElement("style");
       style.textContent = `
             .pet__full-info{
@@ -31,68 +28,49 @@ export function initDeletePet() {
                 z-index: 1;
             }
             .pet__report-conteiner{
-                width: 300px;
-                height: 530px;
-                display: flex;
-                flex-direction: column;
-                padding: 20px;
-                border-radius: 14px;
-                background-color: #FFF8ED;
-                align-items: center;
-                justify-content: space-around;
+              display: flex;
+              padding: 20px;
+              border-radius: 14px;
+              align-items: center;
+              justify-content: center;
+              position: absolute;
+              top: 0;
+              bottom: 0;
+              left: 0;
+              right: 0;
+              margin: auto;
+              width: 300px;
+              height: 180px;
+              background: #108896;
+            }
+            .title{
+                font-family: 'Roboto';
+                font-style: normal;
+                font-weight: 700;
+                font-size: 14px;
+                line-height: 23px;
+                color: #FFFFFF;
                 position: absolute;
                 top: 0;
-                bottom: 0;
-                left: 0;
-                right: 0;
-                margin: auto;
-                width: 300px;
-                height: 530px;
             }
             .text{
                 font-family: 'Roboto';
                 font-style: normal;
-                font-weight: 700;
-                font-size: 20px;
-                line-height: 23px;
-                color: #F19F1F;
-            }
-            .form{
-                display: flex;
-                flex-direction: column;
-                width: 260px;
-            }
-            .label{    width: 100%;
-                display: flex;
-                flex-direction: column;
-                font-family: 'Roboto';
-                font-style: normal;
-                font-weight: 700;
-                font-size: 12px;
-                color: #F19F1F;
-            }
-            .input{
-                height: 45px;
-                margin: 10px 0;
-                width: 100%;
-                background: #F2E5CF;
-                border: 1px solid #F19F1F;
-                border-radius: 14px;
-            }
-            .textarea{
-                height: 140px
+                font-weight: 400;
+                font-size: 14px;
+                line-height: 16px;
+                text-align: center;
+                color: #FFFFFF;
             }
             .button{
-                margin: 10px 5px;
-                padding: 0px 20px;
-                font-family: 'Roboto';
-                font-size: 16px;
-                line-height: 19px;
-                color: #FFFFFF;
-                width: inherit;
-                height: 50px;
-                background: #EF5030;
-                border-radius: 14px;
+              font-size: 14px;
+              text-align: center;
+              color: #F19F1F;
+              background: none;
+              border: none;
+              position: absolute;
+              bottom: 20px;
+              right: 15px;
             }
             .button-cerrar{
                 position: absolute;
@@ -102,46 +80,28 @@ export function initDeletePet() {
                 border: none;
                 background: none;
             }
-            .reporte-exitoso{
-                height: 50px;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                position: absolute;
-                top: 0;
-                bottom: 0;
-                left: 0;
-                right: 0;
-                margin: auto;
-            }
-            .text-gracias{
-                font-family: 'Roboto';
-                color: #F19F1F;
-            }
-            .none{
-                display:none
-            }
             `;
 
       this.shadow.innerHTML = `
         <div class="pet__full-info">
           <div class="pet__report-conteiner">
-            <button class="button-cerrar">${iconoX}</button>
-                <h3 class="text">¡Reporte exitoso!</h3>
-                <p class="text-gracias">Gracias por ayudar</p>
-          
+              <button class="button-cerrar">${iconoXblanco}</button>
+              <h3 class="title">Reportar como encontrada</h3>
+               <p class="text">Si confirmas esta acción se eliminará la mascota de la base de datos.</p>
+              <button class="button">Confirmar</button>
          </div>
         </div>
   
         `;
-      //armar el delete pets
+
       this.shadow.appendChild(style);
       const cs = state.getState();
-      const botonEditar: any = this.shadow.querySelector(".editar");
+      const botonConfirmar: any = this.shadow.querySelector(".button");
 
-      botonEditar.addEventListener("click", (e) => {
+      botonConfirmar.addEventListener("click", (e) => {
         e.preventDefault();
+        state.deletePet();
+        Router.go("/");
       });
     }
   }

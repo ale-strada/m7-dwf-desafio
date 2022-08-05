@@ -63,7 +63,8 @@ class ReportPage extends HTMLElement {
       (cs.lostPetData.petName = target.petName.value),
         (cs.lostPetData.ubication = target.ubication.value),
         (cs.lostPetData.description = target.description.value),
-        state.setState(cs);
+        (cs.lostPetData.email = cs.email);
+      state.setState(cs);
       console.log(cs);
 
       state.createPet();
@@ -177,6 +178,7 @@ class ReportPage extends HTMLElement {
             <label class="input-box">Nombre de la mascota
                 <input class="input" type="text" name="petName">
             </label>
+            <p class="input-box">Agregá una foto aquí</p>
             <div class="foto-input caja">
                 <label class="label"> </label>
             </div>

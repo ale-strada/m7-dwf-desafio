@@ -107,11 +107,16 @@ class EditPage extends HTMLElement {
     });
 
     const popupBorrar = document.querySelector(".popup-borrar");
+    const cerrarPopup =
+      popupBorrar?.shadowRoot?.querySelector(".button-cerrar");
     const encontrada = document.querySelector(".encontrada");
     encontrada?.addEventListener("click", (e) => {
       e.preventDefault();
       popupBorrar?.classList.remove("none");
-      console.log("encontrada");
+    });
+    cerrarPopup?.addEventListener("click", (e) => {
+      e.preventDefault();
+      popupBorrar?.classList.add("none");
     });
   }
 
@@ -218,6 +223,7 @@ class EditPage extends HTMLElement {
             <label class="input-box">Nombre de la mascota
                 <input class="input" type="text" name="petName">
             </label>
+            <p class="input-box">Agregá una foto aquí</p>
             <div class="foto-input caja">
                 <label class="label"> </label>
             </div>

@@ -1,4 +1,5 @@
-import { iconoUbication3, iconoX } from "../../img/iconos";
+import { iconoX } from "../../img/iconos";
+import { state } from "../../state";
 
 export function initPetReportCard() {
   class PetReportCardComp extends HTMLElement {
@@ -163,14 +164,16 @@ export function initPetReportCard() {
 
       form?.addEventListener("submit", (e) => {
         e.preventDefault();
+        const cs = state.getState();
         const target: any = e.target;
 
-        const reporte: any = {
-          nombre: target.reporterName.value,
-          telefono: target.reporterPhone.value,
-          descripcion: target.description.value,
-        };
-        console.log(reporte);
+        cs.reporte.nombre = target.reporterName.value;
+        cs.reporte.telefono = target.reporterPhone.value;
+        cs.reporte.descripcion = target.description.value;
+        state.setState(cs);
+
+        state.sendEmail();
+
         report?.classList.add("none");
         gracias?.classList.remove("none");
         reportConteiner.style.height = "190px";
