@@ -10,6 +10,7 @@ Pet.init(
     lng: DataTypes.FLOAT,
     pictureURL: DataTypes.STRING,
     ubication: DataTypes.STRING,
+    email: DataTypes.STRING,
   },
   { sequelize, modelName: "pet" }
 );

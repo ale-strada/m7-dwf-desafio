@@ -1,5 +1,6 @@
 let sinFoto = require("url:../../img/sin-foto.png");
 import { iconoUbication2 } from "../../img/iconos";
+import { state } from "../../state";
 
 export function initPetTemplate() {
   class PetTemplateComp extends HTMLElement {
@@ -132,9 +133,18 @@ export function initPetTemplate() {
       botonReportar.addEventListener("click", (e) => {
         e.preventDefault();
         reportCard.classList.remove("none");
+        const cs = state.getState();
+        cs.reporte.nombre = "";
       });
       cerrarReport.addEventListener("click", (e) => {
         e.preventDefault();
+        const cs = state.getState();
+        if (cs.reporte.nombre && cs.reporte.email) {
+          state.sendEmail();
+        } else {
+          console.log("falta email o nombre");
+        }
+        state.setState(cs);
         reportCard.classList.add("none");
       });
 

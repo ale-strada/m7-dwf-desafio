@@ -7,7 +7,7 @@ type Pet = {
   ubication: string;
   pictureURL: string;
   description: string;
-  userEmail: string;
+  email: string;
 };
 class PetsNear extends HTMLElement {
   pageTitle: string;
@@ -55,7 +55,7 @@ class PetsNear extends HTMLElement {
         ubication: m.ubication,
         pictureURL: m.pictureURL,
         description: m.description,
-        email: m.userEmail,
+        email: m.email,
       };
 
       return `<template-comp class = "template">

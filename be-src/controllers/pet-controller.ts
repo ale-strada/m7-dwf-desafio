@@ -17,6 +17,7 @@ export async function createPet(userId, petData) {
     pictureURL: imagen.secure_url,
     userId: userId,
     ubication: petData.ubication,
+    email: petData.email,
   });
   try {
     const algoliaRes = await index.saveObject({
@@ -25,6 +26,7 @@ export async function createPet(userId, petData) {
       description: pet.get("description"),
       pictureURL: pet.get("pictureURL"),
       ubication: pet.get("ubication"),
+      email: pet.get("email"),
       _geoloc: {
         lat: pet.get("lat"),
         lng: pet.get("lng"),

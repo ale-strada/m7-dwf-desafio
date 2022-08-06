@@ -20,6 +20,7 @@ const state = {
       nombre: "",
       telefono: "",
       descripcion: "",
+      email: "",
     },
     currentPetEditId: "",
     petsNear: [],
@@ -63,6 +64,7 @@ const state = {
             lng: e._geoloc.lng,
             ubication: e.ubication,
             pictureURL: e.pictureURL,
+            email: e.email,
           };
           cs.petsNear.push(pet);
         });
@@ -77,7 +79,7 @@ const state = {
         "content-type": "application/json",
       },
       body: JSON.stringify({
-        to: cs.lostPetData.email, //no carga email
+        to: cs.reporte.email, //no carga email
         from: "buscador.de.mascotas.app@gmail.com",
         subject: cs.reporte.nombre,
         text: cs.reporte.descripcion + " mi telefono es:" + cs.reporte.telefono,
@@ -102,6 +104,7 @@ const state = {
           lng: cs.lostPetData.lng,
           ubication: cs.lostPetData.ubication,
           pictureURL: cs.lostPetData.pictureURL,
+          email: cs.lostPetData.email,
         }),
       });
       const data = await res.json();

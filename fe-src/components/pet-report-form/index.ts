@@ -8,6 +8,7 @@ export function initPetReportCard() {
     constructor() {
       super();
       this.shadow = this.attachShadow({ mode: "open" });
+
       this.render();
     }
 
@@ -164,19 +165,21 @@ export function initPetReportCard() {
 
       form?.addEventListener("submit", (e) => {
         e.preventDefault();
+
         const cs = state.getState();
         const target: any = e.target;
+        if (target.reporterName.value && target.reporterPhone.value) {
+          report?.classList.add("none");
+          gracias?.classList.remove("none");
+          reportConteiner.style.height = "190px";
+        } else {
+          console.log("no hay datos en el reporte");
+        }
 
         cs.reporte.nombre = target.reporterName.value;
         cs.reporte.telefono = target.reporterPhone.value;
         cs.reporte.descripcion = target.description.value;
-        state.setState(cs);
-
-        state.sendEmail();
-
-        report?.classList.add("none");
-        gracias?.classList.remove("none");
-        reportConteiner.style.height = "190px";
+        cs.reporte.email = pet.email;
       });
     }
   }
