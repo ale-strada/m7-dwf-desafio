@@ -60,6 +60,7 @@ const state = {
         return res.json();
       })
       .then((data) => {
+        const petsList: any = [];
         data.map(function (e) {
           const pet = {
             id: e.objectID,
@@ -71,8 +72,9 @@ const state = {
             pictureURL: e.pictureURL,
             email: e.email,
           };
-          cs.petsNear.push(pet);
+          petsList.push(pet);
         });
+        cs.petsNear = petsList;
         state.setState(cs);
       });
   },
