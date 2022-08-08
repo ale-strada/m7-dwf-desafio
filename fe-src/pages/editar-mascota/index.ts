@@ -28,7 +28,7 @@ class EditPage extends HTMLElement {
     state.subscribe(() => {
       const cs = state.getState();
       this.editPet = cs.lostPetData;
-      //this.render();
+      this.render();
     });
 
     this.render();
@@ -82,7 +82,7 @@ class EditPage extends HTMLElement {
     myDropzone.on("thumbnail", function (file) {
       pictureURL = file.dataURL;
       cs.lostPetData.pictureURL = pictureURL;
-      state.setState(cs);
+      // state.setState(cs);
     });
 
     form.addEventListener("submit", (e) => {
@@ -93,8 +93,10 @@ class EditPage extends HTMLElement {
         (this.editPet.description = target.description.value),
         (this.editPet.pictureURL = cs.lostPetData.pictureURL);
 
-      state.editPet(this.editPet);
-      Router.go("/misMascotas");
+      state.editPet(this.editPet).then(() => {
+        Router.go("/misMascotas");
+      });
+      alert("Información actualizada");
     });
     const cancelButton = document.querySelector(".cancelar");
     cancelButton?.addEventListener("click", (e) => {

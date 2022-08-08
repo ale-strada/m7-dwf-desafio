@@ -223,8 +223,9 @@ export function initHeader() {
       misDatos.addEventListener("click", (e) => {
         e.preventDefault();
         if (cs.token) {
-          console.log("mis datos");
+          Router.go("/signup");
         } else {
+          cs.ruta = "/signup";
           Router.go("/login");
         }
       });
@@ -233,6 +234,7 @@ export function initHeader() {
         if (cs.token) {
           Router.go("/misMascotas");
         } else {
+          cs.ruta = "/misMascotas";
           Router.go("/login");
         }
       });
@@ -241,6 +243,7 @@ export function initHeader() {
         if (cs.token) {
           Router.go("/reportar");
         } else {
+          cs.ruta = "/reportar";
           Router.go("/login");
         }
       });

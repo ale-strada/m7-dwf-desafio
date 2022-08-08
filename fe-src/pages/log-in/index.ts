@@ -12,7 +12,6 @@ class LoginPage extends HTMLElement {
     const togglePassword: any = document.querySelector("#togglePassword");
     const password: any = document.querySelector("#id_password");
     const signupLink: any = document.querySelector(".signup");
-    const labelPass: any = document.querySelector(".pass");
     const errorMessage: any = document.querySelector(".error-message");
 
     form.addEventListener("submit", (e) => {
@@ -22,7 +21,8 @@ class LoginPage extends HTMLElement {
       cs.email = target.email.value;
       state.setState(cs);
       state.logIn(target.password.value, () => {
-        Router.go("/");
+        Router.go(cs.ruta);
+        state.me();
       });
     });
 

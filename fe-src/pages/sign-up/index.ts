@@ -6,35 +6,51 @@ class SignupPage extends HTMLElement {
 
   connectedCallback() {
     const cs = state.getState();
+    state.subscribe(() => {
+      const cs = state.getState();
+      this.render();
+    });
     this.render();
   }
   addListenerts() {
     const cs = state.getState();
-    const form = document.querySelector(".form");
-    form?.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const target: any = e.target;
-      if (target.password.value === target.confirmpassword.value) {
-        const cs = state.getState();
-        let password = target.password.value;
-        cs.fullName = target.fullName.value;
-        cs.email = target.email.value;
-        state.setState(cs);
+    const form: any = document.querySelector(".form");
 
-        state.signUp(password, () => {
-          state.logIn(password, (err) => {
-            if (err) {
-              console.log("hubo un error en el signIn");
-            } else {
-              alert("Usuario creado con éxito!");
-              Router.go("/");
-            }
-          });
-        });
-      } else {
-        console.log("no coincide la contraseña con la confirmacion");
-      }
-    });
+    if (cs.token) {
+      form.fullName.value = cs.fullName;
+      form.email.value = cs.email;
+    } else {
+      form?.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const target: any = e.target;
+        if (target.password.value === target.confirmpassword.value) {
+          const cs = state.getState();
+          let password = target.password.value;
+          cs.fullName = target.fullName.value;
+          cs.email = target.email.value;
+          state.setState(cs);
+          if (cs.token) {
+            state.updateUser(password);
+            alert("Mudificacion guardada!");
+            Router.go("/");
+          } else {
+            state.signUp(password, () => {
+              state.logIn(password, (err) => {
+                if (err) {
+                  console.log("hubo un error en el signIn");
+                } else {
+                  alert("Usuario creado con éxito!");
+                  Router.go("/");
+                }
+              });
+            });
+          }
+        } else {
+          console.log("no coincide la contraseña con la confirmacion");
+          alert("error en la contraseña");
+        }
+      });
+    }
 
     const togglePassword: any = document.querySelector("#togglePassword");
     const password: any = document.querySelector("#id_password");
@@ -100,7 +116,7 @@ class SignupPage extends HTMLElement {
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
     <header-comp></header-comp>
-    <title-comp>Registrarme</title-comp>
+    <title-comp>Mis datos</title-comp>
     <form class="form caja">
         
             <label class="input-box">
@@ -120,7 +136,7 @@ class SignupPage extends HTMLElement {
               <input class="input" type="password" name="confirmpassword" id="id_password-confirm" autocomplete="off" placeholder="Repetir contraseña">
             </label>
        
-        <button class="button">Enviar</button>
+        <button class="button">Guardar</button>
     </form>
     `;
     this.addListenerts();

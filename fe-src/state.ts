@@ -2,6 +2,7 @@ const API_BASE_URL = "";
 
 const state = {
   data: {
+    ruta: "/",
     userId: "",
     fullName: "",
     email: "",
@@ -256,6 +257,43 @@ const state = {
     } else {
       console.error("No hay un email en el state o pass incorrecta");
       callback(true);
+    }
+  },
+  async me() {
+    const cs = this.getState();
+    const res = await fetch("/me", {
+      method: "get",
+      headers: {
+        "content-type": "application/json",
+        Authorization: cs.token,
+      },
+    });
+    const data = await res.json();
+    if (data) {
+      cs.fullName = data.fullName;
+      cs.userId = data.id;
+      this.setState(cs);
+    }
+  },
+  async updateUser(password) {
+    const cs = this.getState();
+    const res = await fetch("/me/update", {
+      method: "post",
+      headers: {
+        "content-type": "application/json",
+        Authorization: cs.token,
+      },
+      body: JSON.stringify({
+        email: cs.email,
+        fullName: cs.fullName,
+        password: password,
+      }),
+    });
+    const data = await res.json();
+    if (data) {
+      cs.fullName = data.fullName;
+      cs.userId = data.id;
+      this.setState(cs);
     }
   },
 };
