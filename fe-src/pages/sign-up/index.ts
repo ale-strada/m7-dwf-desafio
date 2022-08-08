@@ -14,9 +14,9 @@ class SignupPage extends HTMLElement {
     const cs = state.getState();
     const form: any = document.querySelector(".form");
 
+    form.email.value = cs.email;
     if (cs.token) {
       form.fullName.value = cs.fullName;
-      form.email.value = cs.email;
     }
 
     form.addEventListener("submit", (e) => {

@@ -44,6 +44,7 @@ class LoginPage extends HTMLElement {
 
     signupLink.addEventListener("click", (e) => {
       e.preventDefault();
+      state.me();
       Router.go("/signup");
     });
   }
