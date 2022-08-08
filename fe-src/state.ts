@@ -32,10 +32,10 @@ const state = {
 
   init() {
     const lastStorageState: any = localStorage.getItem("state");
-    //console.log(lastStorageState, "STORAGE");
-
     const cs = JSON.parse(lastStorageState);
-    this.setState(cs);
+    if (lastStorageState) {
+      this.setState(cs);
+    }
   },
 
   getState() {
