@@ -2,8 +2,6 @@ import { Router } from "@vaadin/router";
 import { state } from "../../state";
 
 class SignupPage extends HTMLElement {
-  localPlayer: string;
-
   connectedCallback() {
     const cs = state.getState();
     state.subscribe(() => {

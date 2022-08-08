@@ -24,10 +24,10 @@ class PetsNear extends HTMLElement {
   }
   addListenerts() {
     const cs = state.getState();
-    if (this.pets) {
-      this.pageTitle = "Mascotas perdidas cerca tuyo";
-    } else {
+    if (this.pets === []) {
       this.pageTitle = "No hay mascotas perdidas cerca tuyo";
+    } else {
+      this.pageTitle = "Mascotas perdidas cerca tuyo";
     }
   }
   render() {

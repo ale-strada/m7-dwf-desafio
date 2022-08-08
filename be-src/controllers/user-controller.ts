@@ -12,7 +12,10 @@ export async function updateUser(userId, updateData) {
   });
   return updateData;
 }
-
+export async function checkEmail(email) {
+  const user = await User.findOne({ where: { email: email } });
+  return user;
+}
 export async function getUser(userId) {
   const profile = await User.findByPk(userId);
   return profile;

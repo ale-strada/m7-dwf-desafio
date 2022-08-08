@@ -28,10 +28,11 @@ class MyPets extends HTMLElement {
   addListenerts() {
     const cs = state.getState();
 
-    if (this.pets) {
-      this.pageTitle = "Mis mascotas reportadas";
-    } else {
+    if (this.pets === []) {
       this.pageTitle = "No hay mascotas reportadas";
+    } else {
+      console.log(this.pets);
+      this.pageTitle = "Mis mascotas reportadas";
     }
   }
   render() {

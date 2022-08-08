@@ -21,8 +21,13 @@ class LoginPage extends HTMLElement {
       cs.email = target.email.value;
       state.setState(cs);
       state.logIn(target.password.value, () => {
-        Router.go(cs.ruta);
-        state.me();
+        if (cs.token === "bearer email or pass incorrect") {
+          password.classList.add("incorrect");
+          errorMessage.classList.remove("none");
+        } else {
+          Router.go(cs.ruta);
+          state.me();
+        }
       });
     });
 
@@ -41,11 +46,6 @@ class LoginPage extends HTMLElement {
       e.preventDefault();
       Router.go("/signup");
     });
-
-    if (cs.token === "email or pass incorrect") {
-      password.classList.add("incorrect");
-      errorMessage.classList.remove("none");
-    }
   }
 
   render() {

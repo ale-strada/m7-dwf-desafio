@@ -238,6 +238,7 @@ const state = {
   },
   async logIn(password, callback?) {
     const cs = this.getState();
+
     if (cs.email && password) {
       const res = await fetch(API_BASE_URL + "/auth/token", {
         method: "post",
@@ -250,7 +251,9 @@ const state = {
         }),
       });
       const data = await res.json();
-      if (data) {
+      if (data === "usuario no registrado") {
+        alert("usuario no registrado");
+      } else {
         try {
           cs.token = "bearer " + data;
           this.setState(cs);
@@ -261,7 +264,7 @@ const state = {
       }
     } else {
       console.error("No hay un email en el state o pass incorrecta");
-      callback(true);
+      //callback(true);
     }
   },
   async me() {

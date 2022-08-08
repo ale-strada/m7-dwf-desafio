@@ -14,6 +14,7 @@ import {
   signUp,
   signIn,
   SECRET,
+  checkEmail,
 } from "./controllers/user-controller";
 
 import * as jwt from "jsonwebtoken";
@@ -71,11 +72,15 @@ app.post("/auth", async (req, res) => {
 app.post("/auth/token", async (req, res) => {
   const { email, password } = req.body;
   const token = await signIn(email, password);
-
-  if (token) {
-    res.json(token);
+  const emailCheck = await checkEmail(email);
+  if (emailCheck) {
+    if (token) {
+      res.json(token);
+    } else {
+      res.status(400).json("email or pass incorrect");
+    }
   } else {
-    res.status(400).json("email or pass incorrect");
+    res.status(400).json("usuario no registrado");
   }
 });
 
