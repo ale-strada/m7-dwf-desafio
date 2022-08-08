@@ -31,7 +31,6 @@ class MyPets extends HTMLElement {
     if (this.pets === []) {
       this.pageTitle = "No hay mascotas reportadas";
     } else {
-      console.log(this.pets);
       this.pageTitle = "Mis mascotas reportadas";
     }
   }

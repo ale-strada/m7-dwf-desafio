@@ -2,6 +2,7 @@ import { Router } from "@vaadin/router";
 import { state } from "../../state";
 
 class SignupPage extends HTMLElement {
+  title: string;
   connectedCallback() {
     const cs = state.getState();
     state.subscribe(() => {
@@ -12,11 +13,14 @@ class SignupPage extends HTMLElement {
   }
   addListenerts() {
     const cs = state.getState();
+    this.title = "Mis Datos";
     const form: any = document.querySelector(".form");
 
     form.email.value = cs.email;
     if (cs.token) {
-      form.fullName.value = cs.fullName;
+      this.title = "Editar informacion";
+      if (cs.token! != "bearer email or pass incorrect")
+        form.fullName.value = cs.fullName;
     }
 
     form.addEventListener("submit", (e) => {
@@ -114,7 +118,7 @@ class SignupPage extends HTMLElement {
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
     <header-comp></header-comp>
-    <title-comp>Mis datos</title-comp>
+    <title-comp>${this.title}</title-comp>
     <form class="form caja">
         
             <label class="input-box">

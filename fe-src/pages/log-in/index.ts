@@ -13,6 +13,7 @@ class LoginPage extends HTMLElement {
     const password: any = document.querySelector("#id_password");
     const signupLink: any = document.querySelector(".signup");
     const errorMessage: any = document.querySelector(".error-message");
+    const sinPass: any = document.querySelector(".sin-pass");
 
     form.addEventListener("submit", (e) => {
       e.preventDefault();
@@ -43,6 +44,12 @@ class LoginPage extends HTMLElement {
     });
 
     signupLink.addEventListener("click", (e) => {
+      e.preventDefault();
+      state.me();
+      Router.go("/signup");
+    });
+
+    sinPass.addEventListener("click", (e) => {
       e.preventDefault();
       state.me();
       Router.go("/signup");

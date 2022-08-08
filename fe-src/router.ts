@@ -9,5 +9,4 @@ router.setRoutes([
   { path: "/reportar", component: "report-page" },
   { path: "/editar", component: "edit-page" },
   { path: "/misMascotas", component: "mismascotas-page" },
-  // { path: "/welcome", component: "welcome-page" },
 ]);
