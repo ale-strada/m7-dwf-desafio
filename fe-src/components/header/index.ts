@@ -252,7 +252,12 @@ export function initHeader() {
         if (cs.token) {
           cs.token = "";
           cs.email = "";
+          cs.fullName = "";
+          cs.userId = "";
+          cs.ruta = "/";
+          cs.myPets = [];
           state.setState(cs);
+          location.reload();
           console.log("cerrado");
         } else {
           console.log("no hay user");

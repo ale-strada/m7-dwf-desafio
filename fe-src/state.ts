@@ -31,8 +31,11 @@ const state = {
   listeners: [],
 
   init() {
-    //const lastStorageState = localStorage.getItem("state");
-    const cs = this.getState();
+    const lastStorageState: any = localStorage.getItem("state");
+    //console.log(lastStorageState, "STORAGE");
+
+    const cs = JSON.parse(lastStorageState);
+    this.setState(cs);
   },
 
   getState() {
@@ -87,7 +90,6 @@ const state = {
       }),
     });
     const data = await res.json();
-    console.log(data);
   },
   async createPet() {
     const cs = this.getState();
@@ -197,6 +199,8 @@ const state = {
     for (const cb of this.listeners) {
       cb();
     }
+    localStorage.setItem("state", JSON.stringify(this.getState()));
+
     console.log("soy el state, he cambiado", this.getState());
   },
   subscribe(callback: (any) => any) {

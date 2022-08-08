@@ -19,38 +19,38 @@ class SignupPage extends HTMLElement {
     if (cs.token) {
       form.fullName.value = cs.fullName;
       form.email.value = cs.email;
-    } else {
-      form?.addEventListener("submit", (e) => {
-        e.preventDefault();
-        const target: any = e.target;
-        if (target.password.value === target.confirmpassword.value) {
-          const cs = state.getState();
-          let password = target.password.value;
-          cs.fullName = target.fullName.value;
-          cs.email = target.email.value;
-          state.setState(cs);
-          if (cs.token) {
-            state.updateUser(password);
-            alert("Mudificacion guardada!");
-            Router.go("/");
-          } else {
-            state.signUp(password, () => {
-              state.logIn(password, (err) => {
-                if (err) {
-                  console.log("hubo un error en el signIn");
-                } else {
-                  alert("Usuario creado con éxito!");
-                  Router.go("/");
-                }
-              });
-            });
-          }
-        } else {
-          console.log("no coincide la contraseña con la confirmacion");
-          alert("error en la contraseña");
-        }
-      });
     }
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const target: any = e.target;
+      if (target.password.value === target.confirmpassword.value) {
+        const cs = state.getState();
+        let password = target.password.value;
+        cs.fullName = target.fullName.value;
+        cs.email = target.email.value;
+        state.setState(cs);
+        if (cs.token) {
+          state.updateUser(password);
+          alert("Mudificacion guardada!");
+          Router.go("/");
+        } else {
+          state.signUp(password, () => {
+            state.logIn(password, (err) => {
+              if (err) {
+                console.log("hubo un error en el signIn");
+              } else {
+                alert("Usuario creado con éxito!");
+                Router.go("/");
+              }
+            });
+          });
+        }
+      } else {
+        console.log("no coincide la contraseña con la confirmacion");
+        alert("error en la contraseña");
+      }
+    });
 
     const togglePassword: any = document.querySelector("#togglePassword");
     const password: any = document.querySelector("#id_password");
