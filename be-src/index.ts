@@ -109,6 +109,7 @@ app.post("/me/update", authMiddleware, async (req, res) => {
     });
   }
   const updateData = await updateUser(req._user.id, req.body);
+
   res.json(updateData);
 });
 

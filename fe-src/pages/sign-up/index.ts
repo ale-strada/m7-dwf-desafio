@@ -1,4 +1,5 @@
 import { Router } from "@vaadin/router";
+import { json } from "stream/consumers";
 import { state } from "../../state";
 
 class SignupPage extends HTMLElement {
@@ -19,8 +20,6 @@ class SignupPage extends HTMLElement {
     form.email.value = cs.email;
 
     if (cs.token) {
-      console.log("TOKEN");
-
       this.title = "Editar informacion";
       if (cs.token != "bearer email or pass incorrect")
         form.fullName.value = cs.fullName;
@@ -37,6 +36,7 @@ class SignupPage extends HTMLElement {
         state.setState(cs);
         if (cs.token) {
           state.updateUser(password);
+
           alert("Mudificacion guardada!");
           Router.go("/");
         } else {

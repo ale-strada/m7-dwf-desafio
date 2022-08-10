@@ -285,7 +285,7 @@ const state = {
       this.setState(cs);
     }
   },
-  async updateUser(password) {
+  async updateUser(password, callback?) {
     const cs = this.getState();
     const res = await fetch("/me/update", {
       method: "post",
@@ -301,9 +301,7 @@ const state = {
     });
     const data = await res.json();
     if (data) {
-      cs.fullName = data.fullName;
-      cs.userId = data.id;
-      this.setState(cs);
+      callback();
     }
   },
 };

@@ -10,21 +10,29 @@ function getSHA256ofString(texto: string) {
 
 export async function updateUser(userId, updateData) {
   const { email, password } = updateData;
-  const user = await User.update(updateData, {
-    where: {
-      id: userId,
+  const user = await User.update(
+    {
+      email: updateData.email,
+      fullName: updateData.fullName,
     },
-  });
+    {
+      where: {
+        id: userId,
+      },
+    }
+  );
   if (updateData.password) {
     const auth = await Auth.update(
-      { password: getSHA256ofString(updateData.password) },
+      {
+        password: getSHA256ofString(updateData.password),
+        email: updateData.email,
+      },
       {
         where: {
           id: userId,
         },
       }
     );
-    return auth;
   }
 
   return [user];
