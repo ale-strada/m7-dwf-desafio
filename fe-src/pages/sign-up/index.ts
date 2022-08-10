@@ -17,9 +17,12 @@ class SignupPage extends HTMLElement {
     const form: any = document.querySelector(".form");
 
     form.email.value = cs.email;
+
     if (cs.token) {
+      console.log("TOKEN");
+
       this.title = "Editar informacion";
-      if (cs.token! != "bearer email or pass incorrect")
+      if (cs.token != "bearer email or pass incorrect")
         form.fullName.value = cs.fullName;
     }
 

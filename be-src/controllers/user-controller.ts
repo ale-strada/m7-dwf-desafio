@@ -2,15 +2,32 @@ import { User, Pet, Auth } from "../models";
 import { cloudinary } from "../lib/cloudinary";
 import * as crypto from "crypto";
 import * as jwt from "jsonwebtoken";
-const SECRET = "frasesecreta1234";
+const SECRET = process.env.SECRET;
+
+function getSHA256ofString(texto: string) {
+  return crypto.createHash("sha256").update(texto).digest("hex");
+}
 
 export async function updateUser(userId, updateData) {
-  await User.update(updateData, {
+  const { email, password } = updateData;
+  const user = await User.update(updateData, {
     where: {
       id: userId,
     },
   });
-  return updateData;
+  if (updateData.password) {
+    const auth = await Auth.update(
+      { password: getSHA256ofString(updateData.password) },
+      {
+        where: {
+          id: userId,
+        },
+      }
+    );
+    return auth;
+  }
+
+  return [user];
 }
 export async function checkEmail(email) {
   const user = await User.findOne({ where: { email: email } });
@@ -19,10 +36,6 @@ export async function checkEmail(email) {
 export async function getUser(userId) {
   const profile = await User.findByPk(userId);
   return profile;
-}
-
-function getSHA256ofString(texto: string) {
-  return crypto.createHash("sha256").update(texto).digest("hex");
 }
 
 //signup
