@@ -4,12 +4,16 @@ import { mapboxgl } from "../../../be-src/lib/mapbox";
 import { Dropzone } from "dropzone";
 
 class ReportPage extends HTMLElement {
+  cs: any = {};
   connectedCallback() {
     const cs = state.getState();
+    this.cs = cs;
+    cs.ruta = "";
     this.render();
   }
   addListenerts() {
-    const cs = state.getState();
+    // const cs = state.getState();
+
     const miUbicacionButton = document.querySelector(".mi-ubicacion");
     const map = new mapboxgl.Map({
       container: "map",
@@ -19,9 +23,9 @@ class ReportPage extends HTMLElement {
     });
     miUbicacionButton?.addEventListener("click", (e) => {
       e.preventDefault();
-      if (cs.currentGeoLoc.lat && cs.currentGeoLoc.lng) {
+      if (this.cs.currentGeoLoc.lat && this.cs.currentGeoLoc.lng) {
         map.flyTo({
-          center: [cs.currentGeoLoc.lng, cs.currentGeoLoc.lat],
+          center: [this.cs.currentGeoLoc.lng, this.cs.currentGeoLoc.lat],
           zoom: 15,
         });
       } else {
@@ -35,9 +39,9 @@ class ReportPage extends HTMLElement {
     });
     map.on("click", (e) => {
       const marker = new mapboxgl.Marker().setLngLat(e.lngLat).addTo(map);
-      cs.lostPetData.lat = e.lngLat.lat;
-      cs.lostPetData.lng = e.lngLat.lng;
-      state.setState(cs);
+      this.cs.lostPetData.lat = e.lngLat.lat;
+      this.cs.lostPetData.lng = e.lngLat.lng;
+      state.setState(this.cs);
     });
 
     let pictureURL;
@@ -52,20 +56,20 @@ class ReportPage extends HTMLElement {
 
     myDropzone.on("thumbnail", function (file) {
       pictureURL = file.dataURL;
-      cs.lostPetData.pictureURL = pictureURL;
-      state.setState(cs);
+      this.cs.lostPetData.pictureURL = pictureURL;
+      state.setState(this.cs);
     });
 
     const form: any = document.querySelector(".form");
     form.addEventListener("submit", (e) => {
       e.preventDefault();
       const target = e.target;
-      (cs.lostPetData.petName = target.petName.value),
-        (cs.lostPetData.ubication = target.ubication.value),
-        (cs.lostPetData.description = target.description.value),
-        (cs.lostPetData.email = cs.email);
-      state.setState(cs);
-      console.log(cs);
+      (this.cs.lostPetData.petName = target.petName.value),
+        (this.cs.lostPetData.ubication = target.ubication.value),
+        (this.cs.lostPetData.description = target.description.value),
+        (this.cs.lostPetData.email = this.cs.email);
+      state.setState(this.cs);
+      console.log(this.cs);
 
       state.createPet();
       Router.go("/misMascotas");
@@ -73,10 +77,10 @@ class ReportPage extends HTMLElement {
     const cancelButton = document.querySelector(".cancelar");
     cancelButton?.addEventListener("click", (e) => {
       e.preventDefault();
-      cs.lostPetData.pictureURL = "";
-      cs.lostPetData.lat = "";
-      cs.lostPetData.lng = "";
-      state.setState(cs);
+      this.cs.lostPetData.pictureURL = "";
+      this.cs.lostPetData.lat = "";
+      this.cs.lostPetData.lng = "";
+      state.setState(this.cs);
       Router.go("/");
     });
   }

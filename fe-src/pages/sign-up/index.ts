@@ -6,6 +6,8 @@ class SignupPage extends HTMLElement {
   title: string;
   connectedCallback() {
     const cs = state.getState();
+    this.title = "Mis Datos";
+
     state.subscribe(() => {
       const cs = state.getState();
       this.render();
@@ -14,7 +16,8 @@ class SignupPage extends HTMLElement {
   }
   addListenerts() {
     const cs = state.getState();
-    this.title = "Mis Datos";
+    cs.ruta = "";
+
     const form: any = document.querySelector(".form");
 
     form.email.value = cs.email;

@@ -20,9 +20,10 @@ class EditPage extends HTMLElement {
     ubication: "",
     pictureURL: "1",
   };
-
+  cs: any = {};
   connectedCallback() {
     const cs = state.getState();
+    this.cs = cs;
     state.getPetById();
 
     state.subscribe(() => {
@@ -42,7 +43,7 @@ class EditPage extends HTMLElement {
       form.description.value = this.editPet.description;
     }
 
-    const cs = state.getState();
+    //const cs = state.getState();
     const miUbicacionButton = document.querySelector(".mi-ubicacion");
     const map = new mapboxgl.Map({
       container: "map",
@@ -52,9 +53,9 @@ class EditPage extends HTMLElement {
     });
     miUbicacionButton?.addEventListener("click", (e) => {
       e.preventDefault();
-      if (cs.currentGeoLoc.lat && cs.currentGeoLoc.lng) {
+      if (this.cs.currentGeoLoc.lat && this.cs.currentGeoLoc.lng) {
         map.flyTo({
-          center: [cs.currentGeoLoc.lng, cs.currentGeoLoc.lat],
+          center: [this.cs.currentGeoLoc.lng, this.cs.currentGeoLoc.lat],
           zoom: 15,
         });
       } else {
@@ -81,7 +82,7 @@ class EditPage extends HTMLElement {
 
     myDropzone.on("thumbnail", function (file) {
       pictureURL = file.dataURL;
-      cs.lostPetData.pictureURL = pictureURL;
+      this.cs.lostPetData.pictureURL = pictureURL;
       // state.setState(cs);
     });
 
@@ -91,20 +92,21 @@ class EditPage extends HTMLElement {
       (this.editPet.petName = target.petName.value),
         (this.editPet.ubication = target.ubication.value),
         (this.editPet.description = target.description.value),
-        (this.editPet.pictureURL = cs.lostPetData.pictureURL);
+        (this.editPet.pictureURL = this.cs.lostPetData.pictureURL);
 
       state.editPet(this.editPet).then(() => {
-        Router.go("/misMascotas");
+        Router.go("/");
       });
+
       alert("Información actualizada");
     });
     const cancelButton = document.querySelector(".cancelar");
     cancelButton?.addEventListener("click", (e) => {
       e.preventDefault();
-      cs.lostPetData.pictureURL = "";
-      cs.lostPetData.lat = "";
-      cs.lostPetData.lng = "";
-      state.setState(cs);
+      this.cs.lostPetData.pictureURL = "";
+      this.cs.lostPetData.lat = "";
+      this.cs.lostPetData.lng = "";
+      state.setState(this.cs);
       Router.go("/");
     });
 

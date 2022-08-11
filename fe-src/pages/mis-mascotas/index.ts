@@ -16,7 +16,9 @@ class MyPets extends HTMLElement {
 
   connectedCallback() {
     const cs = state.getState();
+    this.pageTitle = "No hay mascotas reportadas";
     state.myPets();
+    cs.ruta = "";
 
     state.subscribe(() => {
       const cs = state.getState();
@@ -26,11 +28,7 @@ class MyPets extends HTMLElement {
     this.render();
   }
   addListenerts() {
-    const cs = state.getState();
-
-    if (this.pets === []) {
-      this.pageTitle = "No hay mascotas reportadas";
-    } else {
+    if (this.pets) {
       this.pageTitle = "Mis mascotas reportadas";
     }
   }

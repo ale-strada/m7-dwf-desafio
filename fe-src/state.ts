@@ -33,7 +33,6 @@ const state = {
   init() {
     const lastStorageState: any = localStorage.getItem("state");
     const cs = JSON.parse(lastStorageState);
-    console.log(cs);
     if (cs) {
       this.setState(cs);
     }
@@ -170,12 +169,8 @@ const state = {
       });
       const data = await res.json();
       if (data) {
-        try {
-          cs.myPets = data;
-          state.setState(cs);
-        } catch (error) {
-          console.error(error);
-        }
+        cs.myPets = data;
+        this.setState(cs);
       }
     } else {
       console.error("usuario no registrado");
@@ -203,7 +198,6 @@ const state = {
       cb();
     }
     localStorage.setItem("state", JSON.stringify(this.getState()));
-
     console.log("soy el state, he cambiado", this.getState());
   },
   subscribe(callback: (any) => any) {
@@ -285,7 +279,7 @@ const state = {
       this.setState(cs);
     }
   },
-  async updateUser(password, callback?) {
+  async updateUser(password) {
     const cs = this.getState();
     const res = await fetch("/me/update", {
       method: "post",
@@ -299,10 +293,7 @@ const state = {
         password: password,
       }),
     });
-    const data = await res.json();
-    if (data) {
-      callback();
-    }
+    // const data = await res.json();
   },
 };
 export { state };

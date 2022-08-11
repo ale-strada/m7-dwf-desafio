@@ -8,15 +8,19 @@ import {
 export function initHeader() {
   class HeaderComp extends HTMLElement {
     shadow: ShadowRoot;
-
+    email: string;
     constructor() {
       super();
       this.shadow = this.attachShadow({ mode: "open" });
+      this.email = "";
       this.render();
     }
 
     render() {
       const cs = state.getState();
+      if (cs.token) {
+        this.email = cs.email;
+      }
       var style = document.createElement("style");
       style.textContent = `
           .header{
@@ -191,7 +195,7 @@ export function initHeader() {
       <li>${iconoReportar} <a href="#" class="reportar">Reportar mascota</a></li>
     </ul>
     <div class="cuenta-user">
-      <p class="user-email">${cs.email}</p>
+      <p class="user-email">${this.email}</p>
       <button class="cerrar-secion">Cerrar Sesión</button>
     </div>
   </nav>
@@ -249,6 +253,7 @@ export function initHeader() {
       });
       cerrarSecion.addEventListener("click", (e) => {
         e.preventDefault();
+        this.email = "";
         if (cs.token) {
           cs.token = "";
           cs.email = "";

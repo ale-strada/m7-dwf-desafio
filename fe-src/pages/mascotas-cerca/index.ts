@@ -15,6 +15,7 @@ class PetsNear extends HTMLElement {
 
   connectedCallback() {
     const cs = state.getState();
+    this.pageTitle = "No hay mascotas perdidas cerca tuyo";
     state.subscribe(() => {
       const cs = state.getState();
       this.pets = cs.petsNear;
@@ -23,10 +24,7 @@ class PetsNear extends HTMLElement {
     this.render();
   }
   addListenerts() {
-    const cs = state.getState();
-    if (this.pets === []) {
-      this.pageTitle = "No hay mascotas perdidas cerca tuyo";
-    } else {
+    if (this.pets) {
       this.pageTitle = "Mascotas perdidas cerca tuyo";
     }
   }

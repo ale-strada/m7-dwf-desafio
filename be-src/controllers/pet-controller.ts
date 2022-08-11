@@ -86,7 +86,6 @@ function bodyToIndex(petData, id?) {
   if (id) {
     respuesta.objectID = id;
   }
-  console.log(respuesta, "respuesta");
 
   return respuesta;
 }
