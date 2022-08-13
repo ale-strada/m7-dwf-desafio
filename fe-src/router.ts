@@ -7,6 +7,20 @@ router.setRoutes([
   { path: "/signup", component: "signup-page" },
   { path: "/login", component: "login-page" },
   { path: "/reportar", component: "report-page" },
-  { path: "/editar", component: "edit-page" },
-  { path: "/misMascotas", component: "mismascotas-page" },
+  //{ path: "/editar", component: "edit-page" },
+  {
+    path: "/editar",
+    component: "edit-page",
+    action: async () => {
+      await import("./pages/editar-mascota");
+    },
+  },
+  //{ path: "/misMascotas", component: "mismascotas-page" },
+  {
+    path: "/misMascotas",
+    component: "mismascotas-page",
+    action: async () => {
+      await import("./pages/mis-mascotas");
+    },
+  },
 ]);

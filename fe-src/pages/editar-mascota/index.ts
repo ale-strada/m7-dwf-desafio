@@ -1,4 +1,4 @@
-import { Router } from "@vaadin/router";
+import { Router, RouterLocation } from "@vaadin/router";
 import { state } from "../../state";
 import { mapboxgl } from "../../../be-src/lib/mapbox";
 import { Dropzone } from "dropzone";
@@ -43,7 +43,7 @@ class EditPage extends HTMLElement {
       form.description.value = this.editPet.description;
     }
 
-    //const cs = state.getState();
+    const cs = state.getState();
     const miUbicacionButton = document.querySelector(".mi-ubicacion");
     const map = new mapboxgl.Map({
       container: "map",
@@ -82,8 +82,8 @@ class EditPage extends HTMLElement {
 
     myDropzone.on("thumbnail", function (file) {
       pictureURL = file.dataURL;
-      this.cs.lostPetData.pictureURL = pictureURL;
-      // state.setState(cs);
+      cs.lostPetData.pictureURL = pictureURL;
+      state.setState(cs);
     });
 
     form.addEventListener("submit", (e) => {
@@ -95,6 +95,8 @@ class EditPage extends HTMLElement {
         (this.editPet.pictureURL = this.cs.lostPetData.pictureURL);
 
       state.editPet(this.editPet).then(() => {
+        this.cs.error = true;
+        state.setState(this.cs);
         Router.go("/");
       });
 

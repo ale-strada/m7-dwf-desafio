@@ -26,6 +26,7 @@ const state = {
     currentPetEditId: "",
     petsNear: [],
     myPets: [],
+    error: false,
   },
 
   listeners: [],

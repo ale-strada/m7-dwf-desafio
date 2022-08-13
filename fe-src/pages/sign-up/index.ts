@@ -6,6 +6,8 @@ class SignupPage extends HTMLElement {
   title: string;
   connectedCallback() {
     const cs = state.getState();
+    cs.error = true;
+    state.setState(cs);
     this.title = "Mis Datos";
 
     state.subscribe(() => {

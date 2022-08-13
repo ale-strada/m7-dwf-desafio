@@ -8,6 +8,11 @@ class Home extends HTMLElement {
   connectedCallback() {
     const cs = state.getState();
     this.render();
+    if (cs.error) {
+      location.reload();
+      cs.error = false;
+      state.setState(cs);
+    }
   }
   addListenerts() {
     const buttonMostrarMascotas: any = this.querySelector(".mostrar-mascotas");
@@ -17,12 +22,8 @@ class Home extends HTMLElement {
     buttonMostrarMascotas.addEventListener("click", (e) => {
       e.preventDefault();
       const cs = state.getState();
-      // if (cs.currentGeoLoc.lat && cs.currentGeoLoc.lng) {
-      //   state.petsNear();
-      //   Router.go("/mascotas");
-      // } else {
+
       userGeoLoc.classList.add("visible");
-      //}
     });
     buttonRechazarLoc.addEventListener("click", (e) => {
       e.preventDefault();
