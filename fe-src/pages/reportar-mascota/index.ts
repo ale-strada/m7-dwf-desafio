@@ -4,12 +4,11 @@ import { mapboxgl } from "../../../be-src/lib/mapbox";
 import { Dropzone } from "dropzone";
 
 class ReportPage extends HTMLElement {
-  //cs: any = {};
   connectedCallback() {
     const cs = state.getState();
     cs.error = true;
     state.setState(cs);
-    //this.cs = cs;
+
     cs.ruta = "";
     this.render();
   }

@@ -25,13 +25,7 @@ class EditPage extends HTMLElement {
     const cs = state.getState();
     this.cs = cs;
     state.getPetById();
-
-    state.subscribe(() => {
-      const cs = state.getState();
-      this.editPet = cs.lostPetData;
-      this.render();
-    });
-
+    this.editPet = cs.lostPetData;
     this.render();
   }
   addListenerts() {
