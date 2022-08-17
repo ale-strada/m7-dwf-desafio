@@ -8,11 +8,11 @@ class Home extends HTMLElement {
   connectedCallback() {
     const cs = state.getState();
     this.render();
-    if (cs.error) {
-      location.reload();
-      cs.error = false;
-      state.setState(cs);
-    }
+    // if (cs.error) {
+    //   location.reload();
+    //   cs.error = false;
+    //   state.setState(cs);
+    //}
   }
   addListenerts() {
     const buttonMostrarMascotas: any = this.querySelector(".mostrar-mascotas");

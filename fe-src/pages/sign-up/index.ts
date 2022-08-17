@@ -6,8 +6,8 @@ class SignupPage extends HTMLElement {
   connectedCallback() {
     const cs = state.getState();
 
-    cs.error = true;
-    state.setState(cs);
+    // cs.error = true;
+    // state.setState(cs);
 
     this.title = "Mis Datos";
 
