@@ -10,10 +10,6 @@ class SignupPage extends HTMLElement {
     state.setState(cs);
     this.title = "Mis Datos";
 
-    state.subscribe(() => {
-      const cs = state.getState();
-      this.render();
-    });
     this.render();
   }
   addListenerts() {

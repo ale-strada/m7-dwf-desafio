@@ -203,6 +203,7 @@ const state = {
   },
   subscribe(callback: (any) => any) {
     this.listeners.push(callback);
+    console.log(this.getState(), "SUSCRIBE");
   },
   signUp(password, callback?) {
     const cs = this.getState();
