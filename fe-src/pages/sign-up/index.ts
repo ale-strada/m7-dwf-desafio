@@ -3,6 +3,8 @@ import { state } from "../../state";
 
 class SignupPage extends HTMLElement {
   title: string;
+  fullName: string;
+  email: string;
   connectedCallback() {
     const cs = state.getState();
 
@@ -10,6 +12,12 @@ class SignupPage extends HTMLElement {
     // state.setState(cs);
 
     this.title = "Mis Datos";
+    this.fullName = cs.fullName;
+    this.email = cs.email;
+
+    if (cs.token) {
+      this.title = "Editar informacion";
+    }
 
     this.render();
   }
@@ -17,14 +25,10 @@ class SignupPage extends HTMLElement {
     const cs = state.getState();
     cs.ruta = "";
 
-    const form: any = document.querySelector(".form");
-
-    form.email.value = cs.email;
-
+    const form: any = document.querySelector(".form-user");
     if (cs.token) {
-      this.title = "Editar informacion";
-      if (cs.token != "bearer email or pass incorrect")
-        form.fullName.value = cs.fullName;
+      form.fullName.value = this.fullName;
+      form.email.value = this.email;
     }
 
     form.addEventListener("submit", (e) => {
@@ -124,7 +128,7 @@ class SignupPage extends HTMLElement {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
     <header-comp></header-comp>
     <title-comp>${this.title}</title-comp>
-    <form class="form caja">
+    <form class="form-user caja">
         
             <label class="input-box">
                 <input class="input" type="text"name="fullName" placeholder="Introduce tu nombre">
