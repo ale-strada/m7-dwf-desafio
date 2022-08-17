@@ -15,9 +15,11 @@ class PetsNear extends HTMLElement {
 
   connectedCallback() {
     const cs = state.getState();
+    state.petsNear();
     this.pets = cs.petsNear;
     this.pageTitle = "No hay mascotas perdidas cerca tuyo";
     this.pets = cs.petsNear;
+
     // state.subscribe(() => {
     //   const cs = state.getState();
     //   this.pets = cs.petsNear;
