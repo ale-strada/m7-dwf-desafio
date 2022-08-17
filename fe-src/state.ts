@@ -1,4 +1,4 @@
-const API_BASE_URL = "";
+const API_BASE_URL = process.env.URL_BASE;
 
 const state = {
   data: {
@@ -33,6 +33,8 @@ const state = {
 
   init() {
     const lastStorageState: any = localStorage.getItem("state");
+    console.log(API_BASE_URL);
+
     const cs = JSON.parse(lastStorageState);
     if (cs) {
       this.setState(cs);
@@ -86,7 +88,7 @@ const state = {
         "content-type": "application/json",
       },
       body: JSON.stringify({
-        to: cs.reporte.email, //no carga email
+        to: cs.reporte.email,
         from: "buscador.de.mascotas.app@gmail.com",
         subject: cs.reporte.nombre,
         text: cs.reporte.descripcion + " mi telefono es:" + cs.reporte.telefono,
@@ -143,7 +145,7 @@ const state = {
   },
   async getPetById() {
     const cs = this.getState();
-    const res = await fetch(API_BASE_URL + "pets/" + cs.currentPetEditId, {
+    const res = await fetch(API_BASE_URL + "/pets/" + cs.currentPetEditId, {
       method: "get",
       headers: {
         "content-type": "application/json",
@@ -179,7 +181,7 @@ const state = {
   },
   async deletePet() {
     const cs = this.getState();
-    const res = await fetch(API_BASE_URL + "pets/" + cs.currentPetEditId, {
+    const res = await fetch(API_BASE_URL + "/pets/" + cs.currentPetEditId, {
       method: "delete",
       headers: {
         "content-type": "application/json",
@@ -262,12 +264,11 @@ const state = {
       }
     } else {
       console.error("No hay un email en el state o pass incorrecta");
-      //callback(true);
     }
   },
   async me() {
     const cs = this.getState();
-    const res = await fetch("/me", {
+    const res = await fetch(API_BASE_URL + "/me", {
       method: "get",
       headers: {
         "content-type": "application/json",
@@ -283,7 +284,7 @@ const state = {
   },
   async updateUser(password) {
     const cs = this.getState();
-    const res = await fetch("/me/update", {
+    const res = await fetch(API_BASE_URL + "/me/update", {
       method: "post",
       headers: {
         "content-type": "application/json",
@@ -295,7 +296,6 @@ const state = {
         password: password,
       }),
     });
-    // const data = await res.json();
   },
 };
 export { state };

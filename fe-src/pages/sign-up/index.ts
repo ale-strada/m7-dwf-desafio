@@ -1,13 +1,14 @@
 import { Router } from "@vaadin/router";
-import { json } from "stream/consumers";
 import { state } from "../../state";
 
 class SignupPage extends HTMLElement {
   title: string;
   connectedCallback() {
     const cs = state.getState();
+
     cs.error = true;
     state.setState(cs);
+
     this.title = "Mis Datos";
 
     this.render();

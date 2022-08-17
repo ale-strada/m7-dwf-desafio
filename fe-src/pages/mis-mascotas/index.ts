@@ -16,16 +16,23 @@ class MyPets extends HTMLElement {
 
   connectedCallback() {
     const cs = state.getState();
-    this.pageTitle = "No hay mascotas reportadas";
-    state.myPets();
     cs.ruta = "";
-    this.pets = cs.myPets;
+
+    this.pageTitle = "No hay mascotas reportadas";
+    state
+      .myPets()
+      .then(() => {
+        this.pets = cs.myPets;
+      })
+      .then(() => {
+        this.render();
+      });
+
     // state.subscribe(() => {
     //   const cs = state.getState();
     //   this.pets = cs.myPets;
     //   this.render();
     // });
-    this.render();
   }
   addListenerts() {
     if (this.pets) {

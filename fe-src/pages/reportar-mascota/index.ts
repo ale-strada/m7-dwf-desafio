@@ -6,8 +6,8 @@ import { Dropzone } from "dropzone";
 class ReportPage extends HTMLElement {
   connectedCallback() {
     const cs = state.getState();
-    cs.error = true;
-    state.setState(cs);
+    //cs.error = true;
+    //state.setState(cs);
 
     cs.ruta = "";
     this.render();
