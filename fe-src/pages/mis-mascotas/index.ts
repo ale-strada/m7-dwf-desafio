@@ -19,20 +19,14 @@ class MyPets extends HTMLElement {
     cs.ruta = "";
 
     this.pageTitle = "No hay mascotas reportadas";
-    state
-      .myPets()
-      .then(() => {
-        this.pets = cs.myPets;
-      })
-      .then(() => {
-        this.render();
-      });
+    state.myPets();
 
-    // state.subscribe(() => {
-    //   const cs = state.getState();
-    //   this.pets = cs.myPets;
-    //   this.render();
-    // });
+    state.subscribe(() => {
+      this.pets = cs.myPets;
+      this.render();
+    });
+
+    this.render();
   }
   addListenerts() {
     if (this.pets) {

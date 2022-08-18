@@ -2,14 +2,18 @@ import { User, Pet, Auth } from "../models";
 import { cloudinary } from "../lib/cloudinary";
 import * as crypto from "crypto";
 import * as jwt from "jsonwebtoken";
+import { userInfo } from "os";
 const SECRET = process.env.SECRET;
 
 function getSHA256ofString(texto: string) {
   return crypto.createHash("sha256").update(texto).digest("hex");
 }
-
-export async function updateUser(userId, updateData) {
-  const { email, password } = updateData;
+export async function getId(email) {
+  const user = await User.findOne({ where: { email: email } });
+  return user;
+}
+export async function updateUser(updateData) {
+  const { email, password, userId } = updateData;
   const user = await User.update(
     {
       email: updateData.email,

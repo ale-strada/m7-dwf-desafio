@@ -282,6 +282,29 @@ const state = {
       this.setState(cs);
     }
   },
+  async meId() {
+    const cs = this.getState();
+    const res = await fetch(API_BASE_URL + "/me/" + cs.email, {
+      method: "get",
+      headers: {
+        "content-type": "application/json",
+      },
+    });
+    const data = await res.json();
+    console.log(data, "LALALLA");
+
+    if (data) {
+      try {
+        cs.userId = data.id;
+        cs.fullName = data.fullName;
+        cs.token = "sin password";
+        state.setState(cs);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  },
+
   async updateUser(password) {
     const cs = this.getState();
     const res = await fetch(API_BASE_URL + "/me/update", {
@@ -291,6 +314,7 @@ const state = {
         Authorization: cs.token,
       },
       body: JSON.stringify({
+        userId: cs.userId,
         email: cs.email,
         fullName: cs.fullName,
         password: password,

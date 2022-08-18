@@ -15,6 +15,7 @@ import {
   signIn,
   SECRET,
   checkEmail,
+  getId,
 } from "./controllers/user-controller";
 
 import * as jwt from "jsonwebtoken";
@@ -95,22 +96,26 @@ function authMiddleware(req, res, next) {
     res.status(401).json({ error: true });
   }
 }
-
-//endpoints seguros
-app.get("/me", authMiddleware, async (req, res) => {
-  const user = await getUser(req._user.id);
+app.get("/me/:email", async (req, res) => {
+  const user = await getId(req.params.email);
   res.json(user);
 });
 
-app.post("/me/update", authMiddleware, async (req, res) => {
+app.post("/me/update", async (req, res) => {
   if (!req.body) {
     res.status(400).json({
       message: "faltan datos en el body",
     });
   }
-  const updateData = await updateUser(req._user.id, req.body);
+  const updateData = await updateUser(req.body);
 
   res.json(updateData);
+});
+
+//endpoints seguros
+app.get("/me", authMiddleware, async (req, res) => {
+  const user = await getUser(req._user.id);
+  res.json(user);
 });
 
 app.get("/me/pets", authMiddleware, async (req, res) => {

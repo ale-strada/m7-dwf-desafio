@@ -8,9 +8,6 @@ class SignupPage extends HTMLElement {
   connectedCallback() {
     const cs = state.getState();
 
-    // cs.error = true;
-    // state.setState(cs);
-
     this.title = "Mis Datos";
     this.fullName = cs.fullName;
     this.email = cs.email;
@@ -21,12 +18,14 @@ class SignupPage extends HTMLElement {
 
     this.render();
   }
+
   addListenerts() {
     const cs = state.getState();
     cs.ruta = "";
 
     const form: any = document.querySelector(".form-user");
-    if (cs.token) {
+
+    if (cs.email) {
       form.fullName.value = this.fullName;
       form.email.value = this.email;
     }
@@ -40,6 +39,7 @@ class SignupPage extends HTMLElement {
         cs.fullName = target.fullName.value;
         cs.email = target.email.value;
         state.setState(cs);
+
         if (cs.token) {
           state.updateUser(password);
 
@@ -77,6 +77,7 @@ class SignupPage extends HTMLElement {
         password.getAttribute("type") === "password" ? "text" : "password";
       password.setAttribute("type", type);
       passwordConfirm.setAttribute("type", type2);
+
       // toggle the eye slash icon
       this.classList.toggle("fa-eye-slash");
     });

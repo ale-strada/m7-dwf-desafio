@@ -25,6 +25,7 @@ class LoginPage extends HTMLElement {
         if (cs.token === "bearer email or pass incorrect") {
           password.classList.add("incorrect");
           errorMessage.classList.remove("none");
+          sinPass.classList.remove("none");
         } else {
           Router.go(cs.ruta);
           state.me();
@@ -45,13 +46,14 @@ class LoginPage extends HTMLElement {
 
     signupLink.addEventListener("click", (e) => {
       e.preventDefault();
-      state.me();
       Router.go("/signup");
     });
 
     sinPass.addEventListener("click", (e) => {
       e.preventDefault();
-      state.me();
+      console.log("sin pass");
+      state.meId();
+
       Router.go("/signup");
     });
   }
@@ -155,7 +157,7 @@ class LoginPage extends HTMLElement {
         <button class="button">Enviar</button>
     </form>
     <p class="sin-cuenta texto">¿No tienes cuenta? <span class="signup azul">Regístrate</span></p>
-    <p class="sin-pass texto azul">Olvidé mi contraseña</span></p>
+    <p class="sin-pass texto azul none">Olvidé mi contraseña</span></p>
 
     `;
     this.addListenerts();
