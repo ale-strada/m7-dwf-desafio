@@ -263,7 +263,7 @@ export function initHeader() {
           cs.ruta = "/";
           cs.myPets = [];
           state.setState(cs);
-          location.reload();
+          Router.go("/");
           console.log("cerrado");
         } else {
           console.log("no hay user");
