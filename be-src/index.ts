@@ -58,6 +58,13 @@ app.get("/user", async (req, res) => {
   const users = await User.findAll();
   res.json(users);
 });
+app.delete("/user", async (req, res) => {
+  const { email } = req.body;
+  await User.destroy({
+    where: { email: email },
+  });
+  res.json("borrado");
+});
 //signup
 app.post("/auth", async (req, res) => {
   if (!req.body) {
