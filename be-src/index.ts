@@ -137,8 +137,12 @@ app.post("/pets", authMiddleware, async (req, res) => {
       message: "faltan datos en el body",
     });
   }
-  const pet = await createPet(req._user.id, req.body);
-  res.json(pet);
+  try {
+    const pet = await createPet(req._user.id, req.body);
+    res.json(pet);
+  } catch (error) {
+    console.log(error, "endpoint");
+  }
 });
 
 app.get("/pets", async (req, res) => {
