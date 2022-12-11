@@ -67,28 +67,35 @@ app.delete("/user", async (req, res) => {
 });
 //signup
 app.post("/auth", async (req, res) => {
-  if (!req.body) {
-    res.status(400).json({
-      message: "faltan datos en el body",
-    });
+  try {
+    if (!req.body) {
+      res.status(400).json({
+        message: "faltan datos en el body",
+      });
+    }
+    const user = await signUp(req.body);
+    res.json(user);
+  } catch (error) {
+    console.log(error);
   }
-  const user = await signUp(req.body);
-  res.json(user);
 });
-
 //login
 app.post("/auth/token", async (req, res) => {
-  const { email, password } = req.body;
-  const token = await signIn(email, password);
-  const emailCheck = await checkEmail(email);
-  if (emailCheck) {
-    if (token) {
-      res.json(token);
+  try {
+    const { email, password } = req.body;
+    const token = await signIn(email, password);
+    const emailCheck = await checkEmail(email);
+    if (emailCheck) {
+      if (token) {
+        res.json(token);
+      } else {
+        res.status(400).json("email or pass incorrect");
+      }
     } else {
-      res.status(400).json("email or pass incorrect");
+      res.status(400).json("usuario no registrado");
     }
-  } else {
-    res.status(400).json("usuario no registrado");
+  } catch (error) {
+    console.log(error);
   }
 });
 
