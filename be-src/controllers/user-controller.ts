@@ -47,7 +47,13 @@ export async function checkEmail(email) {
 }
 export async function getUser(userId) {
   const profile = await User.findByPk(userId);
-  return profile;
+  if (profile) {
+    return profile;
+  } else {
+    //prueba para borrar tokens viejos
+    localStorage.removeItem("token");
+    return true;
+  }
 }
 
 //signup
