@@ -5,8 +5,8 @@
         "moduleResolution": "node",
         "resolveJsonModule": true, 
         "outDir": "be-dist",
-        // "allowImportingTsExtensions": true,
-        // "noEmit": true,
+        "lib": ["esnext", "dom"],
+        "skipLibCheck": true,
     },
     // "exclude": [
     //     "node_modules"
