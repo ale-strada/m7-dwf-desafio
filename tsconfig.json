@@ -5,8 +5,8 @@
         "moduleResolution": "node",
         "resolveJsonModule": true, 
         "outDir": "be-dist",
-        "allowImportingTsExtensions": true,
-        "noEmit": true,
+        // "allowImportingTsExtensions": true,
+        // "noEmit": true,
     },
     // "exclude": [
     //     "node_modules"
