@@ -4,7 +4,9 @@
         "module": "CommonJS",
         "moduleResolution": "node",
         "resolveJsonModule": true, 
-        "outDir": "be-dist"
+        "outDir": "be-dist",
+        "allowImportingTsExtensions": true,
+        "noEmit": true,
     },
     // "exclude": [
     //     "node_modules"
